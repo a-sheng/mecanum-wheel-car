@@ -16,8 +16,11 @@ let Rx = 0
 let Ly = 0
 let Lx = 0
 let Bt = 0
-radio.setGroup(1)
+radio.setGroup(220)
 basic.forever(function () {
+    motorbit.MotorRunDual(motorbit.Motors.M3, Ly + Lx + Rx, motorbit.Motors.M4, Ly - Lx + Rx)
+    motorbit.MotorRunDual(motorbit.Motors.M1, Ly - Lx - Rx, motorbit.Motors.M2, Ly + Lx - Rx)
+    radio.sendNumber(motorbit.Ultrasonic_reading_distance())
     if (Bt ** 2 == 1) {
         music.playSoundEffect(music.createSoundEffect(
         WaveShape.Square,
@@ -40,8 +43,6 @@ basic.forever(function () {
     } else if (Rx > 60) {
         motorbit.motorbit_rus04(RgbUltrasonics.Right, RgbColors.Yellow, ColorEffect.Flash)
     }
-    motorbit.MotorRunDual(motorbit.Motors.M3, Ly + Lx + Rx, motorbit.Motors.M4, Ly - Lx + Rx)
-    motorbit.MotorRunDual(motorbit.Motors.M1, Ly - Lx - Rx, motorbit.Motors.M2, Ly + Lx - Rx)
     serial.writeLine("Bt:" + Bt)
     serial.writeLine("Lx:" + Lx)
     serial.writeLine("Ly:" + Ly)
