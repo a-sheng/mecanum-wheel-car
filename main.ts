@@ -11,7 +11,6 @@ radio.onReceivedValue(function (name, value) {
         Ry = value * 1.1
     }
 })
-let denominator = 0
 let Ry = 0
 let Rx = 0
 let Ly = 0
@@ -19,11 +18,14 @@ let Lx = 0
 let Bt = 0
 radio.setGroup(1)
 basic.forever(function () {
-    denominator = Math.max(Math.abs(Ly) + Math.abs(Lx) + Math.abs(Rx), 1)
-    motorbit.MotorRunDual(motorbit.Motors.M3, (Ly + Lx + Rx) / denominator, motorbit.Motors.M4, (Ly - Lx + Rx) / denominator)
-    motorbit.MotorRunDual(motorbit.Motors.M1, (Ly - Lx - Rx) / denominator, motorbit.Motors.M2, (Ly + Lx - Rx) / denominator)
+    motorbit.MotorRunDual(motorbit.Motors.M3, Ly + Lx + Rx, motorbit.Motors.M4, Ly - Lx + Rx)
+    motorbit.MotorRunDual(motorbit.Motors.M1, Ly - Lx - Rx, motorbit.Motors.M2, Ly + Lx - Rx)
     radio.sendNumber(motorbit.Ultrasonic_reading_distance())
     if (Bt == 1) {
+        motorbit.Setting_the_on_board_lights(Offset.ONE, RgbColors.Red)
+        motorbit.Setting_the_on_board_lights(Offset.TWO, RgbColors.Red)
+        motorbit.Setting_the_on_board_lights(Offset.THREE, RgbColors.Red)
+        motorbit.Setting_the_on_board_lights(Offset.FOUR, RgbColors.Red)
         music.playSoundEffect(music.createSoundEffect(
         WaveShape.Square,
         78,
@@ -36,6 +38,10 @@ basic.forever(function () {
         ), SoundExpressionPlayMode.InBackground)
     }
     if (Bt == 2) {
+        motorbit.Setting_the_on_board_lights(Offset.ONE, RgbColors.Green)
+        motorbit.Setting_the_on_board_lights(Offset.TWO, RgbColors.Green)
+        motorbit.Setting_the_on_board_lights(Offset.THREE, RgbColors.Green)
+        motorbit.Setting_the_on_board_lights(Offset.FOUR, RgbColors.Green)
         music.playSoundEffect(music.createSoundEffect(
         WaveShape.Noise,
         500,
@@ -48,6 +54,10 @@ basic.forever(function () {
         ), SoundExpressionPlayMode.InBackground)
     }
     if (Bt == 4) {
+        motorbit.Setting_the_on_board_lights(Offset.ONE, RgbColors.Purple)
+        motorbit.Setting_the_on_board_lights(Offset.TWO, RgbColors.Purple)
+        motorbit.Setting_the_on_board_lights(Offset.THREE, RgbColors.Purple)
+        motorbit.Setting_the_on_board_lights(Offset.FOUR, RgbColors.Purple)
         music.playSoundEffect(music.createSoundEffect(
         WaveShape.Sawtooth,
         200,
@@ -60,6 +70,10 @@ basic.forever(function () {
         ), SoundExpressionPlayMode.InBackground)
     }
     if (Bt == 8) {
+        motorbit.Setting_the_on_board_lights(Offset.ONE, RgbColors.Indigo)
+        motorbit.Setting_the_on_board_lights(Offset.TWO, RgbColors.Indigo)
+        motorbit.Setting_the_on_board_lights(Offset.THREE, RgbColors.Indigo)
+        motorbit.Setting_the_on_board_lights(Offset.FOUR, RgbColors.Indigo)
         music.playSoundEffect(music.createSoundEffect(
         WaveShape.Sine,
         2760,
@@ -72,6 +86,7 @@ basic.forever(function () {
         ), SoundExpressionPlayMode.InBackground)
     }
     if (Ly == 0 && Lx == 0) {
+        motorbit.close_all_the_on_board_lights()
         motorbit.motorbit_rus04(RgbUltrasonics.All, RgbColors.Blue, ColorEffect.None)
     } else {
         motorbit.motorbit_rus04(RgbUltrasonics.All, RgbColors.Red, ColorEffect.None)
